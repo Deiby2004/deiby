@@ -1,90 +1,144 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Animo Animo</title>
-  <style>
-    body {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      margin: 0;
-      background-color: #fef2f4;
-      font-family: Arial, sans-serif;
-    }
-
-    .heart {
-      position: relative;
-      width: 100px;
-      height: 100px;
-      background-color: #e63946;
-      transform: rotate(-45deg);
-      animation: beat 1s infinite;
-    }
-
-    .heart::before,
-    .heart::after {
-      content: "";
-      position: absolute;
-      width: 100px;
-      height: 100px;
-      background-color: #e63946;
-      border-radius: 50%;
-      top: -50px;
-      left: 0;
-    }
-
-    .heart::after {
-      left: 50px;
-      top: 0;
-    }
-
-    @keyframes beat {
-      0%, 100% {
-        transform: scale(1) rotate(-45deg);
-      }
-      50% {
-        transform: scale(1.1) rotate(-45deg);
-      }
-    }
-
-    .text {
-      margin-top: 20px;
-      text-align: center;
-      font-size: 1.2rem; /* Ajusta el tamaño del texto */
-      color: #333;
-    }
-
-    @media (max-width: 600px) {
-      .text {
-        font-size: 1rem; /* Reduce el tamaño del texto en pantallas pequeñas */
-      }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora</title>
 </head>
 <body>
+
+    <style>
+
+body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+            margin: 0;
+        }
+        .calculadora {
+            width: 220px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        #pantalla {
+            width: 90%;
+            height: 50px;
+            margin-bottom: 20px;
+            font-size: 24px;
+            text-align: right;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        .botones {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+        .boton {
+            padding: 20px;
+            font-size: 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: center;
+        }
+        .boton.operador {
+            background-color: #ff5722;
+        }
+        .boton.borrar {
+            background-color: #f44336;
+        }
+        .boton:hover {
+            background-color: #0056b3;
+        }
+        .boton.operador:hover {
+            background-color: #e64a19;
+        }
+        .boton.borrar:hover {
+            background-color: #d32f2f;
+        }
+
+        .boton.igual{
+            background-color: green;
+        }
+
+    </style>
+
+    <div class="calculadora">
+        <input id="pantalla" value="0" readonly>
+        <button class="boton" id="numeros" onclick="agregarNumeros('7')">7</button>
+        <button class="boton" id="numeros" onclick="agregarNumeros('8')">8</button>
+        <button class="boton" id="numeros" onclick="agregarNumeros('9')">9</button>
+        <button class="boton operador" id="operadores" onclick="agregarOperadores ('*')">x</button>
+
+        <button class="boton" id="numeros" onclick="agregarNumeros('4')">4</button>
+        <button class="boton" id="numeros" onclick="agregarNumeros('5')">5</button>
+        <button class="boton" id="numeros" onclick="agregarNumeros('6')">6</button>
+        <button class="boton operador" id="operadores" onclick="agregarOperadores ('-')"> -</button>
+
+        <button class="boton" id="numeros" onclick="agregarNumeros('1')">1</button>
+        <button class="boton" id="dos" onclick="agregarNumeros('2')">2</button>
+        <button class="boton" id="numeros" onclick="agregarNumeros('3')">3</button>
+        <button class="boton operador" id="operadores" onclick="agregarOperadores ('+')">+</button>
+
+        <button class="boton borrar" id="limpiar" onclick="vaciar('c')">C</button>
+        <button class="boton" id="numeros"onclick="agregarNumeros('0')">0</button>
+        <button class="boton operador" id="operadores" onclick="agregarOperadores ('/')">/</button>
+        <button id="igual" class="boton igual" onclick="calcular('=')">=</button>
+        <button id="borra" class="boton borrar" onclick="borrar('<=')"><=</button>
+       
+    </div>
     
-
-  <div class="heart"></div>
-  <p class="text">¡Anímate, todo va a salir bien! 🌟</p>
-
-  <script>
-    const heart = document.querySelector('.heart');
-
-    heart.addEventListener('click', () => {
-      heart.style.animation = 'none'; // Detener animación temporalmente
-      setTimeout(() => {
-        heart.style.animation = ''; // Reiniciar la animación
-      }, 50);
-    });
-
-    heart.addEventListener("click", function() {
-      alert("¡Y que te has tomado?");
-    });
-  </script>
-  
 </body>
+
+<script>
+
+    function agregarNumeros(numeros){
+        let pantalla = document.getElementById('pantalla');
+
+        if(pantalla.value === '0'){
+            pantalla.value = numeros;
+        } else {
+            pantalla.value += numeros;
+        }
+    }
+
+    function agregarOperadores (operadores) {
+        pantalla.value += operadores;
+        
+    }
+
+    function vaciar (limpiar) {
+        pantalla.value = '0';
+    }
+
+    function calcular (igual) {
+        pantalla.value = eval(pantalla.value);
+    }
+
+    function borrar (borra) {
+        pantalla.value = pantalla.value.slice(0,pantalla.value.length-1);
+    }
+
+    let DOS = 0;
+
+    let dos = document.getElementById('dos');
+
+    dos.addEventListener("click", function(){
+         DOS ++== dos;
+
+         console.log(DOS);
+    })
+
+</script>
+
 </html>
